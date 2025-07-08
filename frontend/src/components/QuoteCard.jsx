@@ -1,5 +1,5 @@
 import { Heart, Pencil, Trash } from "lucide-react";
-import { deleteQuote, editQuote } from "../src/api";
+import { deleteQuote, editQuote } from "../api";
 
 const QuoteCard = ({ quote }) => {
   const { _id, message, author, likers } = quote;

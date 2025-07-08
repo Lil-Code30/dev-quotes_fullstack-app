@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8000/quotes";
+const BASE_URL = "http://localhost:8000";
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -10,10 +10,31 @@ const api = axios.create({
   },
 });
 
+// create a newAccount
+export const createUser = async (newUser) => {
+  try {
+    const res = await api.post("/auth/signin", newUser);
+
+    return res;
+  } catch (err) {
+    console.log(`Error when created the user : ${err.message}`);
+  }
+};
+
+// login
+export const loginUser = async (user) => {
+  try {
+    const res = await api.post("/auth/login", user);
+    return res;
+  } catch (error) {
+    console.log(`Error when login : ${error.message}`);
+  }
+};
+
 //api to fetch all quotes
 export const getAllQuotes = async () => {
   try {
-    const res = await api.get(`/allquotes`);
+    const res = await api.get(`/quotes/allquotes`);
 
     return res.data;
   } catch (err) {
@@ -24,7 +45,7 @@ export const getAllQuotes = async () => {
 // api to add a new quote
 export const addNewQuote = async (newQuote) => {
   try {
-    const res = await api.post("/newquote", newQuote);
+    const res = await api.post("/quotes/newquote", newQuote);
 
     return res;
   } catch (err) {
@@ -38,7 +59,7 @@ export const editQuote = async (quoteID, editQuote) => {
     if (!quoteID) {
       console.log("Please enter the quote ID");
     }
-    const res = await api.put(`/${quoteID}`, editQuote);
+    const res = await api.put(`/quotes/${quoteID}`, editQuote);
 
     return res;
   } catch (err) {
@@ -51,7 +72,7 @@ export const deleteQuote = async (quoteID) => {
     if (!quoteID) {
       console.log("Please enter the quote ID");
     }
-    const res = await api.delete(`/${quoteID}`);
+    const res = await api.delete(`/quotes/${quoteID}`);
 
     return res;
   } catch (err) {

@@ -1,4 +1,4 @@
-import { addNewQuote } from "../src/api";
+import { addNewQuote } from "../api";
 
 const AddQuoteForm = () => {
   const handleSubmit = (formData) => {
