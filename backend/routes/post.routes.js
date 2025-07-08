@@ -9,12 +9,12 @@ import {
   getPost,
 } from "../controllers/post.controllers.js";
 
-export const router = express.Router();
+export const quoteRouter = express.Router();
 
-router.get("/allquotes", getPosts);
-router.get("/:id", getPost);
-router.post("/newquote", setPost);
-router.put("/:id", editPost);
-router.delete("/:id", deletePost);
-router.patch("/like-quote/:id", likePost);
-router.patch("/dislike-quote/:id", disLikePost);
+quoteRouter.get("/allquotes", getPosts);
+quoteRouter.get("/:id", getPost);
+quoteRouter.post("/newquote", setPost);
+quoteRouter.put("/:id", editPost);
+quoteRouter.delete("/:id", deletePost);
+quoteRouter.patch("/like-quote/:id", likePost);
+quoteRouter.patch("/dislike-quote/:id", disLikePost);

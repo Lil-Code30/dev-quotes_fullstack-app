@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
-import { router } from "./routes/post.routes.js";
+import { quoteRouter } from "./routes/post.routes.js";
+import { authRouter } from "./routes/auth.routes.js";
 import { connectDB } from "./config/db.js";
 
 const PORT = process.env.PORT || 8000;
@@ -17,7 +18,8 @@ app.use(cors({ origin: allowedOrigin, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/quotes", router);
+app.use("/quotes", quoteRouter);
+app.use("/auth", authRouter);
 
 // lauch the server
 app.listen(PORT, () => console.log("Server running on part : ", PORT));
