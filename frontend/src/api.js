@@ -10,6 +10,8 @@ const api = axios.create({
   },
 });
 
+const token = JSON.parse(localStorage.getItem("resData"))?.jsonToken;
+
 // create a newAccount
 export const createUser = async (newUser) => {
   try {
@@ -45,7 +47,11 @@ export const getAllQuotes = async () => {
 // api to add a new quote
 export const addNewQuote = async (newQuote) => {
   try {
-    const res = await api.post("/quotes/newquote", newQuote);
+    const res = await api.post("/quotes/newquote", newQuote, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return res;
   } catch (err) {
@@ -59,7 +65,11 @@ export const editQuote = async (quoteID, editQuote) => {
     if (!quoteID) {
       console.log("Please enter the quote ID");
     }
-    const res = await api.put(`/quotes/${quoteID}`, editQuote);
+    const res = await api.put(`/quotes/${quoteID}`, editQuote, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return res;
   } catch (err) {
@@ -72,7 +82,11 @@ export const deleteQuote = async (quoteID) => {
     if (!quoteID) {
       console.log("Please enter the quote ID");
     }
-    const res = await api.delete(`/quotes/${quoteID}`);
+    const res = await api.delete(`/quotes/${quoteID}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return res;
   } catch (err) {
