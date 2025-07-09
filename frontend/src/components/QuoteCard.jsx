@@ -28,12 +28,20 @@ const QuoteCard = ({ quote }) => {
 
   // function to like a quote
   const handleLikeQuote = async () => {
+    if (!connectedUsername) {
+      alert("You must be logged in to like a quote");
+      return;
+    }
     const like = await likeQuote(_id, username);
     console.log(like);
   };
 
   // function to dislike a quote
   const handleDislikeQuote = async () => {
+    if (!connectedUsername) {
+      alert("You must be logged in to dislike a quote");
+      return;
+    }
     const dislike = await disLikeQuote(_id, username);
     console.log(dislike);
   };
@@ -147,15 +155,13 @@ const QuoteCard = ({ quote }) => {
             <div className="flex-center gap-1 ">
               <span className="text-xl">{likers.length}</span>
               {likers.includes(username) ? (
-                <Heart
-                  className="fill-red-600 size-6"
-                  onClick={handleDislikeQuote}
-                />
+                <button onClick={handleDislikeQuote}>
+                  <Heart className="fill-red-600 size-6" />
+                </button>
               ) : (
-                <Heart
-                  className="fill-gray-400 size-6"
-                  onClick={handleLikeQuote}
-                />
+                <button onClick={handleLikeQuote}>
+                  <Heart className="fill-gray-400 size-6" />
+                </button>
               )}
             </div>
           </div>
