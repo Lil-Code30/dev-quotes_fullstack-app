@@ -89,7 +89,7 @@ export const likePost = async (req, res) => {
     await PostModel.findByIdAndUpdate(
       req.params.id,
       {
-        $addToSet: { likers: req.body.userId },
+        $addToSet: { likers: req.body.username },
       },
       { new: true }
     ).then((data) => res.status(200).send(data));
@@ -105,7 +105,7 @@ export const disLikePost = async (req, res) => {
     await PostModel.findByIdAndUpdate(
       req.params.id,
       {
-        $pull: { likers: req.body.userId },
+        $pull: { likers: req.body.username },
       },
       { new: true }
     ).then((data) => res.status(200).send(data));
