@@ -5,7 +5,8 @@ const AddQuoteForm = () => {
     const message = formData.get("quote");
     const author = formData.get("author");
 
-    const newQuote = { message, author };
+    const username = localStorage.getItem("resData")?.username;
+    const newQuote = { message, author, username };
 
     addNewQuote(newQuote);
   };
