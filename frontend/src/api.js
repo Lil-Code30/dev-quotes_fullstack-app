@@ -10,8 +10,6 @@ const api = axios.create({
   },
 });
 
-const token = JSON.parse(localStorage.getItem("resData"))?.jsonToken;
-
 // create a newAccount
 export const createUser = async (newUser) => {
   try {
@@ -45,7 +43,7 @@ export const getAllQuotes = async () => {
 };
 
 // api to add a new quote
-export const addNewQuote = async (newQuote) => {
+export const addNewQuote = async (newQuote, token) => {
   try {
     const res = await api.post("/quotes/newquote", newQuote, {
       headers: {
@@ -60,7 +58,7 @@ export const addNewQuote = async (newQuote) => {
 };
 
 // api to edit a quote
-export const editQuote = async (quoteID, editQuote) => {
+export const editQuote = async (quoteID, editQuote, token) => {
   try {
     if (!quoteID) {
       console.log("Please enter the quote ID");
@@ -77,7 +75,7 @@ export const editQuote = async (quoteID, editQuote) => {
   }
 };
 // api to delete a quote
-export const deleteQuote = async (quoteID) => {
+export const deleteQuote = async (quoteID, token) => {
   try {
     if (!quoteID) {
       console.log("Please enter the quote ID");

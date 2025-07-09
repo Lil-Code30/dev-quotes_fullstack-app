@@ -1,12 +1,16 @@
 import { Heart, Pencil, Trash } from "lucide-react";
 import { deleteQuote, editQuote } from "../api";
+import useStore from "../store/store";
 
 const QuoteCard = ({ quote }) => {
   const { _id, message, author, likers } = quote;
 
+  const resData = useStore((state) => state.resData);
+  const token = resData?.jsonToken;
+
   //function to delete a quote
   const handleDeleteQuote = () => {
-    deleteQuote(_id);
+    deleteQuote(_id, token);
   };
 
   // function to edit a quote
@@ -17,7 +21,7 @@ const QuoteCard = ({ quote }) => {
       message,
       author,
     };
-    editQuote(_id, newData);
+    editQuote(_id, newData, token);
     document.getElementById(_id).close();
   };
 

@@ -1,14 +1,17 @@
 import { addNewQuote } from "../api";
+import useStore from "../store/store";
 
 const AddQuoteForm = () => {
+  const resData = useStore((state) => state.resData);
+  const token = resData?.jsonToken;
+  const username = resData?.username;
   const handleSubmit = (formData) => {
     const message = formData.get("quote");
     const author = formData.get("author");
 
-    const username = localStorage.getItem("resData")?.username;
     const newQuote = { message, author, username };
-
-    addNewQuote(newQuote);
+    console.log(token, username);
+    addNewQuote(newQuote, token);
   };
 
   return (
