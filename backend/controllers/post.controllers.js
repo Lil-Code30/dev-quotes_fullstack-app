@@ -34,9 +34,11 @@ export const setPost = async (req, res) => {
       res.status(400).json({ message: "Merci d'ajouter un message" });
     }
 
+    const { message, author, username } = req.body;
     const post = await PostModel.create({
-      message: req.body.message,
-      author: req.body.author,
+      message,
+      author,
+      username,
     });
     res.status(200).json(post);
   } catch (err) {

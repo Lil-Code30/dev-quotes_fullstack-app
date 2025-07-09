@@ -13,6 +13,7 @@ const postSchema = mongoose.Schema(
     username: {
       type: String,
       required: true,
+      unique: false,
     },
     likers: {
       type: [String],
