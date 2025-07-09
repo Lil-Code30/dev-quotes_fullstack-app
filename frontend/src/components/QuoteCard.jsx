@@ -1,5 +1,5 @@
 import { Heart, Pencil, Trash } from "lucide-react";
-import { deleteQuote, editQuote } from "../api";
+import { deleteQuote, editQuote, likeQuote, disLikeQuote } from "../api";
 import useStore from "../store/store";
 
 const QuoteCard = ({ quote }) => {
@@ -26,6 +26,17 @@ const QuoteCard = ({ quote }) => {
     document.getElementById(_id).close();
   };
 
+  // function to like a quote
+  const handleLikeQuote = async () => {
+    const like = await likeQuote(_id, username);
+    console.log(like);
+  };
+
+  // function to dislike a quote
+  const handleDislikeQuote = async () => {
+    const dislike = await disLikeQuote(_id, username);
+    console.log(dislike);
+  };
   return (
     <>
       {/* dialog box to edit the selected post */}
@@ -135,7 +146,17 @@ const QuoteCard = ({ quote }) => {
             </div>
             <div className="flex-center gap-1 ">
               <span className="text-xl">{likers.length}</span>
-              <Heart color="red" className="fill-red-500 size-6" />
+              {likers.includes(username) ? (
+                <Heart
+                  className="fill-red-600 size-6"
+                  onClick={handleDislikeQuote}
+                />
+              ) : (
+                <Heart
+                  className="fill-gray-400 size-6"
+                  onClick={handleLikeQuote}
+                />
+              )}
             </div>
           </div>
         </div>

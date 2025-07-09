@@ -92,6 +92,36 @@ export const deleteQuote = async (quoteID, token) => {
   }
 };
 
+// api to like a quote
+export const likeQuote = async (quoteID, username) => {
+  try {
+    if (!quoteID) {
+      console.log("Please enter the quote ID");
+    }
+    const res = await api.patch(`/quotes/like-quote/${quoteID}`, { username });
+
+    return res;
+  } catch (err) {
+    console.log(`Error when Liking the quote : ${err.message}`);
+  }
+};
+
+// api to dislike a quote
+export const disLikeQuote = async (quoteID, username) => {
+  try {
+    if (!quoteID) {
+      console.log("Please enter the quote ID");
+    }
+    const res = await api.patch(`/quotes/dislike-quote/${quoteID}`, {
+      username,
+    });
+
+    return res;
+  } catch (err) {
+    console.log(`Error when Disliking the quote : ${err.message}`);
+  }
+};
+
 //api to get a quote with an id
 // export const getQuoteById = async (quoteID) => {
 //   try {
