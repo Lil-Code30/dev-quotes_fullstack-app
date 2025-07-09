@@ -12,7 +12,7 @@ connectDB();
 const app = express();
 
 //middleware
-const allowedOrigin = "http://localhost:5173";
+const allowedOrigin = "https://dev-quotes-v1.vercel.app";
 
 app.use(cors({ origin: allowedOrigin, credentials: true }));
 app.use(express.json());
