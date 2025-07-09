@@ -88,13 +88,18 @@ export const deletePost = async (req, res) => {
 // like a post in db
 export const likePost = async (req, res) => {
   try {
+    const { username } = req.body;
+    if (!username) {
+      res.status(400).json({ message: "Please enter your username" });
+    }
     await PostModel.findByIdAndUpdate(
       req.params.id,
       {
-        $addToSet: { likers: req.body.username },
+        $addToSet: { likers: username },
       },
       { new: true }
-    ).then((data) => res.status(200).send(data));
+    );
+    res.status(200).json({ message: "The post has been liked" });
   } catch (err) {
     res.status(500).json({ message: err.message });
     console.log("Could not like the post : ", err.message);
@@ -104,10 +109,14 @@ export const likePost = async (req, res) => {
 // dislike a post in db
 export const disLikePost = async (req, res) => {
   try {
+    const { username } = req.body;
+    if (!username) {
+      res.status(400).json({ message: "Please enter your username" });
+    }
     await PostModel.findByIdAndUpdate(
       req.params.id,
       {
-        $pull: { likers: req.body.username },
+        $pull: { likers: username },
       },
       { new: true }
     ).then((data) => res.status(200).send(data));
