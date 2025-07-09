@@ -3,9 +3,10 @@ import { deleteQuote, editQuote } from "../api";
 import useStore from "../store/store";
 
 const QuoteCard = ({ quote }) => {
-  const { _id, message, author, likers } = quote;
+  const { _id, message, author, likers, username } = quote;
 
   const resData = useStore((state) => state.resData);
+  const connectedUsername = resData?.username;
   const token = resData?.jsonToken;
 
   //function to delete a quote
@@ -98,22 +99,24 @@ const QuoteCard = ({ quote }) => {
         <div className="absolute -top-6">
           <img src="/images/icons8-quotes-50.png" alt="quote logo" />
         </div>
-        <div className="pt-5 self-end flex-center gap-2">
-          <button
-            onClick={() => document.getElementById(_id).showModal()}
-            title="Edit Quote"
-            className="hover:cursor-pointer"
-          >
-            <Pencil className="fill-orange-400 size-5" />
-          </button>
-          <button
-            onClick={handleDeleteQuote}
-            title="Delete Quote"
-            className="hover:cursor-pointer"
-          >
-            <Trash className="fill-red-600 size-5" />
-          </button>
-        </div>
+        {connectedUsername === username && (
+          <div className="pt-5 self-end flex-center gap-2">
+            <button
+              onClick={() => document.getElementById(_id).showModal()}
+              title="Edit Quote"
+              className="hover:cursor-pointer"
+            >
+              <Pencil className="fill-orange-400 size-5" />
+            </button>
+            <button
+              onClick={handleDeleteQuote}
+              title="Delete Quote"
+              className="hover:cursor-pointer"
+            >
+              <Trash className="fill-red-600 size-5" />
+            </button>
+          </div>
+        )}
         <p className="font-eb-garamond text-3xl py-3">{message}</p>
         <div className="mt-auto">
           <div
