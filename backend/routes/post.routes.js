@@ -15,7 +15,7 @@ export const quoteRouter = express.Router();
 quoteRouter.get("/allquotes", getPosts);
 quoteRouter.get("/:id", getPost);
 quoteRouter.post("/newquote", authMiddleware, setPost);
-quoteRouter.put("/:id", editPost);
+quoteRouter.put("/:id", authMiddleware, editPost);
 quoteRouter.delete("/:id", authMiddleware, deletePost);
 quoteRouter.patch("/like-quote/:id", likePost);
 quoteRouter.patch("/dislike-quote/:id", disLikePost);
