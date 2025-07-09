@@ -1,10 +1,29 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import useStore from "../store/store";
 import { loginUser } from "../api";
 
 const Login = () => {
-  const handleLogin = (formData) => {
+  const resData = useStore((state) => state.resData);
+  const setResData = useStore((state) => state.setResData);
+  const navigate = useNavigate();
+
+  const handleLogin = async (formData) => {
     const email = formData.get("email");
     const password = formData.get("password");
+    const userCredentials = { email, password };
+    const loginData = await loginUser(userCredentials);
+
+    if (!loginData) {
+      console.log("error when login user");
+    } else {
+      setResData(loginData.data);
+      navigate("/");
+    }
   };
+  useEffect(() => {
+    localStorage.setItem("resData", JSON.stringify(resData));
+  }, [resData]);
   return (
     <form action={handleLogin} className="max-w-sm mx-auto my-5">
       <div className="mb-5">
@@ -17,6 +36,7 @@ const Login = () => {
         <input
           type="email"
           id="email"
+          name="email"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="name@flowbite.com"
           required
@@ -25,7 +45,6 @@ const Login = () => {
       <div className="mb-5">
         <label
           htmlFor="password"
-          name="password"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
           Your password
@@ -33,6 +52,7 @@ const Login = () => {
         <input
           type="password"
           id="password"
+          name="password"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           required
         />
@@ -47,7 +67,7 @@ const Login = () => {
           />
         </div>
         <label
-          for="remember"
+          htmlFor="remember"
           className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
         >
           Remember me

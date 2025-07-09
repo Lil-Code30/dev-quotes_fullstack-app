@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { ErrorMessage } from "../components/Alerts";
 import { createUser } from "../api";
+import useStore from "../store/store";
 
 const Signin = () => {
   const [errorMsg, setErrorMsg] = useState();
-  const [resData, setResData] = useState(
-    JSON.parse(localStorage.getItem("resData")) || []
-  );
 
+  const resData = useStore((state) => state.resData);
+  const setResData = useStore((state) => state.setResData);
   const handleSignin = async (formData) => {
     const email = formData.get("email");
     const username = formData.get("username");
@@ -19,9 +19,7 @@ const Signin = () => {
       return;
     }
     const newUser = { email, username, password };
-    console.log(newUser);
     const userData = await createUser(newUser);
-
     if (!userData) {
       console.log("error when creating a user");
       setErrorMsg("error when creating a user");
